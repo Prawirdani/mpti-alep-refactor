@@ -22,7 +22,7 @@ app.get('/', (req: Request, res: Response, next: NextFunction) => {
   }
 });
 
-app.use(apiRoute);
+app.use('/api', apiRoute);
 
 app.use(ErrorHandler);
 
