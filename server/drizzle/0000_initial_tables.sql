@@ -25,7 +25,7 @@ CREATE TABLE `transaksi` (
 	`no_hp` varchar(30),
 	`paket_id` int NOT NULL,
 	`karyawan_id` int NOT NULL,
-	`status` enum('booking','pending','proses','selesai','batal') NOT NULL DEFAULT 'pending',
+	`status` enum('booking','proses','selesai','batal') NOT NULL DEFAULT 'proses',
 	`total` int NOT NULL,
 	`jadwal_booking` timestamp,
 	`waktu_transaksi` timestamp DEFAULT (now()),

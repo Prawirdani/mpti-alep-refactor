@@ -13,13 +13,11 @@ export const transaksi = mysqlTable('transaksi', {
   karyawan_id: int('karyawan_id')
     .notNull()
     .references(() => karyawan.id),
-  status: mysqlEnum('status', ['booking', 'pending', 'proses', 'selesai', 'batal'])
-    .default('pending')
+  status: mysqlEnum('status', ['booking', 'proses', 'selesai', 'batal'])
+    .default('proses')
     .notNull(),
   total_harga: int('total').notNull(),
-  jadwal_booking: timestamp('jadwal_booking')
-    .default(sql`NULL`)
-    .$type<Date | null>(),
+  jadwal_booking: timestamp('jadwal_booking'),
   waktu_transaksi: timestamp('waktu_transaksi').defaultNow(),
 });
 

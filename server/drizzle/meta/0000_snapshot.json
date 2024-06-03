@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "mysql",
-  "id": "dcce7659-975e-4037-8584-de987a2cb408",
+  "id": "a04e30ae-9fee-428c-9da2-c5e8098c1faf",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "karyawan": {
@@ -173,11 +173,11 @@
         },
         "status": {
           "name": "status",
-          "type": "enum('booking','pending','proses','selesai','batal')",
+          "type": "enum('booking','proses','selesai','batal')",
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false,
-          "default": "'pending'"
+          "default": "'proses'"
         },
         "total": {
           "name": "total",
