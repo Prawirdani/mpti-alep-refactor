@@ -3,7 +3,7 @@ import {
   KaryawanUpdateSchema,
   karyawanCreateSchema,
   karyawanUpdateSchema,
-} from '../schemas/karyawan_schemas';
+} from '../schemas/karyawan_schema';
 import { Router, NextFunction, Request, Response } from 'express';
 import { MakeResponse } from '../utils/response';
 import { AuthAccessToken } from './middleware/authenticate';
