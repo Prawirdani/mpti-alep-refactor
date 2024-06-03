@@ -8,61 +8,72 @@ import AdminIndex from './dashboard/AdminIndex';
 import LoginPage from './dashboard/LoginPage';
 import SettingPage from './dashboard/SettingPage';
 import TransactionPage from './dashboard/TransactionPage';
+import TransaksiProvider from '@/context/TransaksiProvider';
+import PaketProvider from '@/context/PaketProvider';
+import KaryawanProvider from '@/context/KaryawanProvider';
 
 function PersistLogin() {
-	const [isLoading, setIsLoading] = useState(true);
-	const { identify } = useAuth();
+  const [isLoading, setIsLoading] = useState(true);
+  const { identify } = useAuth();
 
-	useEffect(() => {
-		const identifyUser = async () => {
-			await identify().finally(() => setIsLoading(false));
-		};
+  useEffect(() => {
+    const identifyUser = async () => {
+      await identify().finally(() => setIsLoading(false));
+    };
 
-		identifyUser();
-	}, []);
+    identifyUser();
+  }, []);
 
-	return isLoading ? (
-		<div className="h-screen">
-			<Loader />
-		</div>
-	) : (
-		<Outlet />
-	);
+  return isLoading ? (
+    <div className="h-screen">
+      <Loader />
+    </div>
+  ) : (
+    <Outlet />
+  );
 }
 
 export const adminRoutes: RouteObject[] = [
-	{
-		path: '/auth/login',
-		element: <LoginPage />,
-	},
-	{
-		element: <PersistLogin />,
-		children: [
-			{
-				path: '/admin',
-				element: <Dashboard />,
-				children: [
-					{
-						path: '/admin',
-						element: <AdminIndex />,
-					},
-					{
-						path: '/admin/transactions',
-						element: <TransactionPage />,
-					},
-					{
-						path: '/admin/settings',
-						element: <SettingPage />,
-					},
-				],
-			},
-		],
-	},
+  {
+    path: '/auth/login',
+    element: <LoginPage />,
+  },
+  {
+    element: <PersistLogin />,
+    children: [
+      {
+        path: '/admin',
+        element: (
+          <TransaksiProvider>
+            <PaketProvider>
+              <KaryawanProvider>
+                <Dashboard />
+              </KaryawanProvider>
+            </PaketProvider>
+          </TransaksiProvider>
+        ),
+        children: [
+          {
+            path: '/admin',
+            element: <AdminIndex />,
+          },
+          {
+            path: '/admin/transactions',
+            element: <TransactionPage />,
+          },
+          {
+            path: '/admin/settings',
+            element: <SettingPage />,
+          },
+        ],
+      },
+    ],
+  },
 ];
 
 export const publicRoutes: RouteObject[] = [
-	{
-		path: '/',
-		element: <IndexPage />,
-	},
+  {
+    path: '/',
+    element: <IndexPage />,
+  },
 ];

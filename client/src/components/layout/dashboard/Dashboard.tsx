@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Header from './Header';
 import Sidebar from './Sidebar';
 import { Navigate, Outlet } from 'react-router-dom';
-import { useAuth } from '@/context/hooks';
+import { useAuth, useKaryawan, usePaket, useTransaksi } from '@/context/hooks';
+import Loader from '@/components/ui/loader';
 
 export default function Dashboard() {
 	const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -19,8 +20,10 @@ export default function Dashboard() {
 				<Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 				{/* Header component */}
 				{/* Main content */}
-				<main className="bg-white flex-1 p-4 xs:p-8 w-full overflow-y-auto">
-					<Outlet />
+				<main className="flex-1 p-4 xs:p-8 w-full overflow-y-auto">
+					<Fetcher>
+						<Outlet />
+					</Fetcher>
 				</main>
 				{/* Main content */}
 			</div>
@@ -28,4 +31,20 @@ export default function Dashboard() {
 	) : (
 		<Navigate to="/auth/login" replace />
 	);
+}
+
+function Fetcher({ children }: { children: React.ReactNode }) {
+	const [loading, setLoading] = useState(true);
+	const { fetchTransaksi } = useTransaksi();
+	const { fetchPaket } = usePaket();
+	const { fetchKaryawan } = useKaryawan();
+
+	useEffect(() => {
+		const fetchAllData = async () => {
+			await Promise.all([fetchTransaksi(), fetchPaket(), fetchKaryawan()]);
+		};
+		fetchAllData().finally(() => setLoading(false));
+	}, []);
+
+	return loading ? <Loader /> : <>{children}</>;
 }
