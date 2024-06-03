@@ -1,5 +1,18 @@
 // app.d.ts
 declare global {
+  type ApiResponse<T> = {
+    data: T;
+    message?: string;
+  };
+
+  type ErrorResponse = {
+    error: {
+      status: number;
+      message: string;
+      details?: Record<string, string>;
+    };
+  };
+
   type UserRole = 'admin' | 'operator';
 
   type AuthUser = {
