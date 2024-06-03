@@ -1,4 +1,4 @@
-import { relations } from 'drizzle-orm';
+import { relations, sql } from 'drizzle-orm';
 import { varchar, timestamp, mysqlTable, int, mysqlEnum } from 'drizzle-orm/mysql-core';
 import { paket } from './paket';
 import { karyawan } from './karyawan';
@@ -17,7 +17,9 @@ export const transaksi = mysqlTable('transaksi', {
     .default('pending')
     .notNull(),
   total_harga: int('total').notNull(),
-  jadwal_booking: timestamp('jadwal_booking'),
+  jadwal_booking: timestamp('jadwal_booking')
+    .default(sql`NULL`)
+    .$type<Date | null>(),
   waktu_transaksi: timestamp('waktu_transaksi').defaultNow(),
 });
 
