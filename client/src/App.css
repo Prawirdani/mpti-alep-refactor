@@ -1,0 +1,116 @@
+@tailwind base;
+  @tailwind components;
+  @tailwind utilities;
+
+
+@layer base {
+	
+:root  {
+  --background: 26 100% 95%;
+  --foreground: 26 5% 0%;
+  --card: 26 50% 90%;
+  --card-foreground: 26 5% 10%;
+  --popover: 26 100% 95%;
+  --popover-foreground: 26 100% 0%;
+  --primary: 26 83.3% 14.1%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 26 30% 70%;
+  --secondary-foreground: 0 0% 0%;
+  --muted: -12 30% 85%;
+  --muted-foreground: 26 5% 35%;
+  --accent: -12 30% 80%;
+  --accent-foreground: 26 5% 10%;
+  --destructive: 0 100% 30%;
+  --destructive-foreground: 26 5% 90%;
+  --border: 26 30% 50%;
+  --input: 26 30% 18%;
+  --ring: 26 83.3% 14.1%;
+  --radius: 0.5rem;
+}
+.dark  {
+  --background: 26 50% 5%;
+  --foreground: 26 5% 90%;
+  --card: 26 50% 0%;
+  --card-foreground: 26 5% 90%;
+  --popover: 26 50% 5%;
+  --popover-foreground: 26 5% 90%;
+  --primary: 26 83.3% 14.1%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 26 30% 10%;
+  --secondary-foreground: 0 0% 100%;
+  --muted: -12 30% 15%;
+  --muted-foreground: 26 5% 60%;
+  --accent: -12 30% 15%;
+  --accent-foreground: 26 5% 90%;
+  --destructive: 0 100% 30%;
+  --destructive-foreground: 26 5% 90%;
+  --border: 26 30% 18%;
+  --input: 26 30% 18%;
+  --ring: 26 83.3% 14.1%;
+  --radius: 0.5rem;
+}
+
+	
+
+}
+
+
+  @layer base {
+    * {
+      @apply border-border font-geist;
+    }
+    body {
+      @apply bg-background text-foreground;
+    }
+  }
+
+
+@font-face {
+	font-family: 'Geist';
+	src: url('./assets/fonts/Geist-Thin.woff2') format('woff2');
+	font-style: thin;
+	font-display: swap;
+	font-weight: 100;
+}
+@font-face {
+	font-family: 'Geist';
+	src: url('./assets/fonts/Geist-UltraLight.woff2') format('woff2');
+	font-style: extralight;
+	font-display: swap;
+	font-weight: 200;
+}
+@font-face {
+	font-family: 'Geist';
+	src: url('./assets/fonts/Geist-Light.woff2') format('woff2');
+	font-style: light;
+	font-display: swap;
+	font-weight: 300;
+}
+@font-face {
+	font-family: 'Geist';
+	src: url('./assets/fonts/Geist-Regular.woff2') format('woff2');
+	font-style: normal;
+	font-display: swap;
+	font-weight: 400;
+}
+@font-face {
+	font-family: 'Geist';
+	src: url('./assets/fonts/Geist-Medium.woff2') format('woff2');
+	font-style: medium;
+	font-display: swap;
+	font-weight: 500;
+}
+@font-face {
+	font-family: 'Geist';
+	src: url('./assets/fonts/Geist-SemiBold.woff2') format('woff2');
+	font-style: semibold;
+	font-display: swap;
+	font-weight: 600;
+}
+@font-face {
+	font-family: 'Geist';
+	src: url('./assets/fonts/Geist-Bold.woff2') format('woff2');
+	font-style: bold;
+	font-display: swap;
+	font-weight: 700;
+}
