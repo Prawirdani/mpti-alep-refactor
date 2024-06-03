@@ -19,6 +19,7 @@ const transaksiRoute = Router();
 transaksiRoute.get('/transaksi', AuthAccessToken, getTransaksi);
 transaksiRoute.post('/transaksi', AuthAccessToken, createTransaksi);
 transaksiRoute.post('/transaksi/booking', AuthAccessToken, createTransaksiBooking);
+transaksiRoute.post('/transaksi/:id/booking/process', AuthAccessToken, processTransaksiBooking);
 transaksiRoute.post('/transaksi/:id/complete', AuthAccessToken, completeTransaksi);
 transaksiRoute.post('/transaksi/:id/cancel', AuthAccessToken, cancelTransaksi);
 export default transaksiRoute;
@@ -177,6 +178,31 @@ async function cancelTransaksi(req: Request, res: Response, next: NextFunction) 
       .where(eq(transaksi.id, Number(id)));
 
     res.status(200).json(MakeResponse(null, 'Berhasil membatalkan transaksi!'));
+  } catch (error) {
+    next(error);
+  }
+}
+
+async function processTransaksiBooking(req: Request, res: Response, next: NextFunction) {
+  try {
+    const { id } = req.params;
+
+    const transaksiData = await db.query.transaksi.findFirst({
+      where: eq(transaksi.id, Number(id)),
+    });
+
+    if (!transaksiData) {
+      throw ErrNotFound('Transaksi tidak ditemukan!');
+    }
+
+    await db
+      .update(transaksi)
+      .set({
+        status: 'proses',
+      })
+      .where(eq(transaksi.id, Number(id)));
+
+    res.status(200).json(MakeResponse(null, 'Berhasil memproses transaksi booking!'));
   } catch (error) {
     next(error);
   }
