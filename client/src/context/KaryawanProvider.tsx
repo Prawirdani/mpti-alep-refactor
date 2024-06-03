@@ -16,7 +16,7 @@ export default function KaryawanProvider({ children }: { children: React.ReactNo
   }, []);
 
   async function fetchKaryawan() {
-    const res = await Fetch('/api/transaksi', {
+    const res = await Fetch('/api/karyawan', {
       method: 'GET',
       credentials: 'include',
     });

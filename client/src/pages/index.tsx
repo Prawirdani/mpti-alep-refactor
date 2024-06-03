@@ -7,10 +7,10 @@ import Loader from '@/components/ui/loader';
 import AdminIndex from './dashboard/AdminIndex';
 import LoginPage from './dashboard/LoginPage';
 import SettingPage from './dashboard/SettingPage';
-import TransactionPage from './dashboard/TransactionPage';
 import TransaksiProvider from '@/context/TransaksiProvider';
 import PaketProvider from '@/context/PaketProvider';
 import KaryawanProvider from '@/context/KaryawanProvider';
+import TransaksiPage from './dashboard/TransaksiPage';
 
 function PersistLogin() {
   const [isLoading, setIsLoading] = useState(true);
@@ -59,7 +59,7 @@ export const adminRoutes: RouteObject[] = [
           },
           {
             path: '/admin/transactions',
-            element: <TransactionPage />,
+            element: <TransaksiPage />,
           },
           {
             path: '/admin/settings',
