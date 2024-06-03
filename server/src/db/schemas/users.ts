@@ -1,4 +1,4 @@
-import { varchar, timestamp, mysqlTable, mysqlEnum, int } from 'drizzle-orm/mysql-core';
+import { varchar, timestamp, mysqlTable, mysqlEnum, int, boolean } from 'drizzle-orm/mysql-core';
 
 export const users = mysqlTable('users', {
   id: int('id').autoincrement().primaryKey(),
@@ -6,6 +6,7 @@ export const users = mysqlTable('users', {
   username: varchar('username', { length: 100 }).unique(),
   password: varchar('password', { length: 256 }),
   role: mysqlEnum('role', ['admin', 'operator']).default('operator'),
-  createdAt: timestamp('created_at').defaultNow(),
-  updatedAt: timestamp('updated_at').defaultNow(),
+  created_at: timestamp('created_at').defaultNow(),
+  updated_at: timestamp('updated_at').defaultNow(),
+  deleted: boolean('deleted').default(false),
 });

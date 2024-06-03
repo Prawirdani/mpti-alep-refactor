@@ -17,8 +17,8 @@ export const transaksi = mysqlTable('transaksi', {
     .default('pending')
     .notNull(),
   total_harga: int('total').notNull(),
-  waktuBooking: timestamp('waktu_booking'),
-  waktuTransaksi: timestamp('created_at').defaultNow(),
+  jadwal_booking: timestamp('jadwal_booking'),
+  waktu_transaksi: timestamp('waktu_transaksi').defaultNow(),
 });
 
 export const transaksiRelations = relations(transaksi, ({ many }) => ({

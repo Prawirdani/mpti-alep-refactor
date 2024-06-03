@@ -4,6 +4,7 @@ CREATE TABLE `karyawan` (
 	`handphone` varchar(30),
 	`created_at` timestamp DEFAULT (now()),
 	`updated_at` timestamp DEFAULT (now()),
+	`deleted` boolean DEFAULT false,
 	CONSTRAINT `karyawan_id` PRIMARY KEY(`id`)
 );
 --> statement-breakpoint
@@ -14,6 +15,7 @@ CREATE TABLE `paket` (
 	`harga` int,
 	`created_at` timestamp DEFAULT (now()),
 	`updated_at` timestamp DEFAULT (now()),
+	`deleted` boolean DEFAULT false,
 	CONSTRAINT `paket_id` PRIMARY KEY(`id`)
 );
 --> statement-breakpoint
@@ -25,8 +27,8 @@ CREATE TABLE `transaksi` (
 	`karyawan_id` int NOT NULL,
 	`status` enum('booking','pending','proses','selesai','batal') NOT NULL DEFAULT 'pending',
 	`total` int NOT NULL,
-	`waktu_booking` timestamp,
-	`created_at` timestamp DEFAULT (now()),
+	`jadwal_booking` timestamp,
+	`waktu_transaksi` timestamp DEFAULT (now()),
 	CONSTRAINT `transaksi_id` PRIMARY KEY(`id`)
 );
 --> statement-breakpoint
@@ -38,6 +40,7 @@ CREATE TABLE `users` (
 	`role` enum('admin','operator') DEFAULT 'operator',
 	`created_at` timestamp DEFAULT (now()),
 	`updated_at` timestamp DEFAULT (now()),
+	`deleted` boolean DEFAULT false,
 	CONSTRAINT `users_id` PRIMARY KEY(`id`),
 	CONSTRAINT `users_username_unique` UNIQUE(`username`)
 );

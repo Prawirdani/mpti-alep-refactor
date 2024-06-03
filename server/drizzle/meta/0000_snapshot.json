@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "mysql",
-  "id": "0ead62f8-734a-4c70-8789-ef02409fd4da",
+  "id": "dcce7659-975e-4037-8584-de987a2cb408",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "karyawan": {
@@ -43,6 +43,14 @@
           "notNull": false,
           "autoincrement": false,
           "default": "(now())"
+        },
+        "deleted": {
+          "name": "deleted",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": false
         }
       },
       "indexes": {},
@@ -103,6 +111,14 @@
           "notNull": false,
           "autoincrement": false,
           "default": "(now())"
+        },
+        "deleted": {
+          "name": "deleted",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": false
         }
       },
       "indexes": {},
@@ -170,15 +186,15 @@
           "notNull": true,
           "autoincrement": false
         },
-        "waktu_booking": {
-          "name": "waktu_booking",
+        "jadwal_booking": {
+          "name": "jadwal_booking",
           "type": "timestamp",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
         },
-        "created_at": {
-          "name": "created_at",
+        "waktu_transaksi": {
+          "name": "waktu_transaksi",
           "type": "timestamp",
           "primaryKey": false,
           "notNull": false,
@@ -279,6 +295,14 @@
           "notNull": false,
           "autoincrement": false,
           "default": "(now())"
+        },
+        "deleted": {
+          "name": "deleted",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": false
         }
       },
       "indexes": {},

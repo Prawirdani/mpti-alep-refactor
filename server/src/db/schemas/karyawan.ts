@@ -1,9 +1,10 @@
-import { varchar, timestamp, mysqlTable, int } from 'drizzle-orm/mysql-core';
+import { varchar, timestamp, mysqlTable, int, boolean } from 'drizzle-orm/mysql-core';
 
 export const karyawan = mysqlTable('karyawan', {
   id: int('id').autoincrement().primaryKey(),
   nama: varchar('nama', { length: 100 }),
   handphone: varchar('handphone', { length: 30 }),
-  createdAt: timestamp('created_at').defaultNow(),
-  updatedAt: timestamp('updated_at').defaultNow(),
+  created_at: timestamp('created_at').defaultNow(),
+  updated_at: timestamp('updated_at').defaultNow(),
+  deleted: boolean('deleted').default(false),
 });
