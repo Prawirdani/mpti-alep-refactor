@@ -1,10 +1,15 @@
-import TitleSetter from '../pageTitle';
+import { Outlet } from 'react-router-dom';
+import Footer from './Footer';
+import Header from './Header';
 
-export default function IndexContent() {
+export default function PublicContent() {
   return (
-    <section className="flex-grow py-12 px-4 sm:px-12 2xl:px-80 bg-primary-foreground">
-      <TitleSetter title="LoremBookStore" />
-      <p>This is public index</p>
-    </section>
+    <div className="flex flex-col min-h-screen">
+      <Header />
+      <main className="flex-grow p-12 flex">
+        <Outlet />
+      </main>
+      <Footer />
+    </div>
   );
 }

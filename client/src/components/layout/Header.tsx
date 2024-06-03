@@ -1,8 +1,24 @@
+import { Link } from 'react-router-dom';
+
 export default function Header() {
   return (
-    <header className="shadow-xl bg-primary-foreground z-40 px-4 2xl:px-80 py-5">
-      <div className="flex items-center gap-2 w-full">
-        <h1 className="text-primary font-bold text-xl">This Is Header</h1>
+    <header className="shadow-xl z-40 px-8 py-4">
+      <div className="flex justify-between gap-2 w-full">
+        <h1 className="text-primary font-bold text-xl">Sultan Barbershop</h1>
+        <div className="flex gap-4 items-center">
+          <Link to="/" className="text-primary font-semibold hover:text-seconday">
+            Home
+          </Link>
+          <Link to="/about" className="text-primary font-semibold hover:text-seconday">
+            About
+          </Link>
+          <Link to="/contact" className="text-primary font-semibold hover:text-seconday">
+            Contact
+          </Link>
+          <Link to="/booking" className="text-primary font-semibold hover:text-seconday">
+            Booking
+          </Link>
+        </div>
       </div>
     </header>
   );

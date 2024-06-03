@@ -1,4 +1,3 @@
-import IndexPage from './public/IndexPage';
 import { Outlet, RouteObject } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useAuth } from '@/context/hooks';
@@ -11,6 +10,11 @@ import TransaksiProvider from '@/context/TransaksiProvider';
 import PaketProvider from '@/context/PaketProvider';
 import KaryawanProvider from '@/context/KaryawanProvider';
 import TransaksiPage from './dashboard/TransaksiPage';
+import PublicContent from '@/components/layout/Content';
+import HomePage from './public/Home';
+import AboutPage from './public/About';
+import ContactPage from './public/Contact';
+import BookingPage from './public/Booking';
 
 function PersistLogin() {
   const [isLoading, setIsLoading] = useState(true);
@@ -73,7 +77,24 @@ export const adminRoutes: RouteObject[] = [
 
 export const publicRoutes: RouteObject[] = [
   {
-    path: '/',
-    element: <IndexPage />,
+    element: <PublicContent />,
+    children: [
+      {
+        path: '/',
+        element: <HomePage />,
+      },
+      {
+        path: '/about',
+        element: <AboutPage />,
+      },
+      {
+        path: '/contact',
+        element: <ContactPage />,
+      },
+      {
+        path: '/booking',
+        element: <BookingPage />,
+      },
+    ],
   },
 ];
