@@ -6,9 +6,6 @@ import Loader from '@/components/ui/loader';
 import AdminIndex from './dashboard/AdminIndex';
 import LoginPage from './dashboard/LoginPage';
 import SettingPage from './dashboard/SettingPage';
-import TransaksiProvider from '@/context/TransaksiProvider';
-import PaketProvider from '@/context/PaketProvider';
-import KaryawanProvider from '@/context/KaryawanProvider';
 import TransaksiPage from './dashboard/TransaksiPage';
 import PublicContent from '@/components/layout/Content';
 import HomePage from './public/Home';
@@ -47,15 +44,7 @@ export const adminRoutes: RouteObject[] = [
     children: [
       {
         path: '/admin',
-        element: (
-          <TransaksiProvider>
-            <PaketProvider>
-              <KaryawanProvider>
-                <Dashboard />
-              </KaryawanProvider>
-            </PaketProvider>
-          </TransaksiProvider>
-        ),
+        element: <Dashboard />,
         children: [
           {
             path: '/admin',
