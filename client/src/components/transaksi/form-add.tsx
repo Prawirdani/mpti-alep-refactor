@@ -107,7 +107,7 @@ export default function FormAddTransaksi() {
                 name="paketId"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel htmlFor="paketId">Kategori Menu</FormLabel>
+                    <FormLabel htmlFor="paketId">Paket</FormLabel>
                     <Select onValueChange={field.onChange} name={field.name}>
                       <FormControl id="paketId">
                         <SelectTrigger>

@@ -28,6 +28,7 @@ export default function TransaksiProvider({ children }: { children: React.ReactN
     if (res.ok) {
       const resBody = (await res.json()) as { data: Transaksi[] };
       setListTransaksi(resBody.data);
+      console.log(resBody);
     }
   }
 
@@ -59,11 +60,11 @@ export default function TransaksiProvider({ children }: { children: React.ReactN
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        nama_customer: data.nama_customer,
-        no_hp: data.no_hp,
-        paket_id: Number(data.paket_id),
-        karyawan_id: Number(data.karyawan_id),
-        jadwal_booking: data.jadwal_booking,
+        nama_customer: data.namaCustomer,
+        no_hp: data.noHp,
+        paket_id: Number(data.paketId),
+        karyawan_id: Number(data.karyawanId),
+        jadwal_booking: String(data.jadwalBooking),
       }),
     });
   }
