@@ -1,7 +1,6 @@
 import 'dotenv/config';
-import express, { Request, Response, NextFunction } from 'express';
+import express from 'express';
 import { ErrorHandler } from './controller/middleware/error';
-import { MakeResponse } from './utils/response';
 import morgan from 'morgan';
 import cookieParser from 'cookie-parser';
 import apiRoute from './controller/routes';
@@ -13,14 +12,6 @@ app.use(compression());
 app.use(morgan('dev'));
 app.use(cookieParser());
 app.use(express.json());
-
-app.get('/', (req: Request, res: Response, next: NextFunction) => {
-  try {
-    res.status(200).json(MakeResponse(null, 'Hello, World!'));
-  } catch (error) {
-    next(error);
-  }
-});
 
 app.use('/api', apiRoute);
 

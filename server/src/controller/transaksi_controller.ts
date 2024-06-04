@@ -18,7 +18,7 @@ import db from '../db';
 const transaksiRoute = Router();
 transaksiRoute.get('/transaksi', AuthAccessToken, getTransaksi);
 transaksiRoute.post('/transaksi', AuthAccessToken, createTransaksi);
-transaksiRoute.post('/transaksi/booking', AuthAccessToken, createTransaksiBooking);
+transaksiRoute.post('/transaksi/booking', createTransaksiBooking);
 transaksiRoute.post('/transaksi/:id/booking/process', AuthAccessToken, processTransaksiBooking);
 transaksiRoute.post('/transaksi/:id/complete', AuthAccessToken, completeTransaksi);
 transaksiRoute.post('/transaksi/:id/cancel', AuthAccessToken, cancelTransaksi);
@@ -101,10 +101,11 @@ async function createTransaksiBooking(req: Request, res: Response, next: NextFun
     const karyawanData = await db.query.karyawan.findFirst({
       where: eq(karyawan.id, request.karyawan_id),
     });
-
     if (!karyawanData) {
       throw ErrNotFound('Karyawan tidak ditemukan!');
     }
+
+    console.log('request.jadwal_booking', request.jadwal_booking);
 
     const insert = await db.insert(transaksi).values({
       karyawan_id: request.karyawan_id,

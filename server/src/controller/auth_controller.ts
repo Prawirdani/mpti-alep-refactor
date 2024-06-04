@@ -72,7 +72,7 @@ async function login(req: Request, res: Response, next: NextFunction) {
       throw ErrUnauthorized('Periksa kembali username dan password Anda');
     }
 
-    const { password, createdAt, updatedAt, ...payload } = user; // Omit password, createdAt and updatedAt from user object
+    const { password, created_at, updated_at, ...payload } = user; // Omit password, createdAt and updatedAt from user object
     const accessToken = generateToken(payload);
     const refreshToken = generateToken({ id: payload.id }, 'refresh');
 
@@ -110,7 +110,7 @@ async function refresh(req: Request, res: Response, next: NextFunction) {
       throw ErrUnauthorized('User not found');
     }
 
-    const { password, createdAt, updatedAt, ...payload } = user; // Omit password, createdAt and updatedAt from user object
+    const { password, created_at, updated_at, ...payload } = user; // Omit password, createdAt and updatedAt from user object
     const accessToken = generateToken(payload);
     const refreshToken = generateToken({ id: payload.id }, 'refresh');
 
