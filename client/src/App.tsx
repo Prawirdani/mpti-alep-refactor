@@ -6,7 +6,7 @@ import { H1 } from '@/components/typography';
 import { Frown } from 'lucide-react';
 import AuthProvider from './context/AuthProvider';
 import { useEffect, useState } from 'react';
-import { useKaryawan, usePaket, useTransaksi } from '@/context/hooks';
+import { useKaryawan, usePaket } from '@/context/hooks';
 import Loader from '@/components/ui/loader';
 import TransaksiProvider from '@/context/TransaksiProvider';
 import PaketProvider from '@/context/PaketProvider';
@@ -39,13 +39,12 @@ export default function App() {
 
 function Fetcher({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true);
-  const { fetchTransaksi } = useTransaksi();
   const { fetchPaket } = usePaket();
   const { fetchKaryawan } = useKaryawan();
 
   useEffect(() => {
     const fetchAllData = async () => {
-      await Promise.all([fetchTransaksi(), fetchPaket(), fetchKaryawan()]);
+      await Promise.all([fetchPaket(), fetchKaryawan()]);
     };
     fetchAllData().finally(() => setLoading(false));
   }, []);

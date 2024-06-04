@@ -10,15 +10,21 @@ import { useTransaksi } from '@/context/hooks';
 import { formatIDR } from '@/lib/formatter';
 import { titleCase } from '@/lib/utils';
 import { Check, X } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { id } from 'date-fns/locale';
 import { format } from 'date-fns';
+import Loader from '@/components/ui/loader';
 
 export default function TransaksiPage() {
+  const [loading, setLoading] = useState(true);
   const [updateTarget, setUpdateTarget] = useState<Transaksi>({} as Transaksi);
-
   const [openCompleteDialog, setOpenCompleteDialog] = useState(false);
   const [openCancelDialog, setOpenCancelDialog] = useState(false);
+
+  const { fetchTransaksi, listTransaksi } = useTransaksi();
+  useEffect(() => {
+    fetchTransaksi().finally(() => setLoading(false));
+  }, []);
 
   const triggerCompleteDialog = (tx: Transaksi) => {
     setUpdateTarget(tx);
@@ -30,8 +36,9 @@ export default function TransaksiPage() {
     setOpenCancelDialog(true);
   };
 
-  const { listTransaksi } = useTransaksi();
-  return (
+  return loading ? (
+    <Loader />
+  ) : (
     <section>
       <TitleSetter title="Transaksi" />
       <div className="mb-4">
