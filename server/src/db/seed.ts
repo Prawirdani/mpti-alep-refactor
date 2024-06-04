@@ -9,8 +9,8 @@ async function seeders() {
   async function user_seed() {
     try {
       await db.insert(users).values({
-        nama: 'Lorem Ipsum',
-        username: 'lorem',
+        nama: 'John Doe',
+        username: 'doe',
         password: await bcrypt.hash('123456', 10),
         role: 'admin',
       });
