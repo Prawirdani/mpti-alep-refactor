@@ -8,20 +8,22 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { isErrorResponse } from '@/lib/fetcher';
-import { useKaryawan } from '@/context/hooks';
-import { KaryawanSchema, karyawanSchema } from '@/lib/schemas/karyawan';
+import { useUser } from '@/context/hooks';
+import { UserRegisterSchema, userRegisterSchema } from '@/lib/schemas/user';
 
-export default function FormAddKaryawan() {
+export default function FormRegisterUser() {
   const [open, setOpen] = useState(false);
   const [apiError, setApiError] = useState<string | null>(null);
 
-  const { addKaryawan, invalidate } = useKaryawan();
+  const { registerUser, invalidate } = useUser();
 
-  const form = useForm<KaryawanSchema>({
-    resolver: zodResolver(karyawanSchema),
+  const form = useForm<UserRegisterSchema>({
+    resolver: zodResolver(userRegisterSchema),
     defaultValues: {
       nama: '',
-      handphone: '',
+      username: '',
+      password: '',
+      repeatPassword: '',
     },
   });
 
@@ -32,20 +34,20 @@ export default function FormAddKaryawan() {
     formState: { isSubmitting },
   } = form;
 
-  async function onSubmit(data: KaryawanSchema) {
+  async function onSubmit(data: UserRegisterSchema) {
     try {
-      const res = await addKaryawan(data);
+      const res = await registerUser(data);
 
       const resBody = await res.json();
       if (!res.ok) {
         setApiError(isErrorResponse(resBody) ? resBody.error.message : 'Terjadi Kesalahan');
         return;
       }
-      toast({ description: 'Berhasil menambahkan karyawan!' });
+      toast({ description: 'Berhasil registrasi akun!' });
       await invalidate();
       setOpen(false);
     } catch (error) {
-      toast({ description: 'Gagal menambahkan karyawan!', variant: 'destructive' });
+      toast({ description: 'Gagal registrasi akun!', variant: 'destructive' });
     }
   }
 
@@ -59,7 +61,7 @@ export default function FormAddKaryawan() {
       {/* Dialog Trigger Button */}
       <Button className="space-x-1" onClick={() => setOpen(true)}>
         <Plus />
-        <span>Karyawan</span>
+        <span>Akun</span>
       </Button>
       {/* Dialog Trigger Button */}
 
@@ -67,7 +69,7 @@ export default function FormAddKaryawan() {
         <Form {...form}>
           <form onSubmit={handleSubmit(onSubmit)}>
             <DialogHeader className="mb-4">
-              <DialogTitle>Tambah Karyawan</DialogTitle>
+              <DialogTitle>Registrasi Akun Operator</DialogTitle>
             </DialogHeader>
             <div className="space-y-2 col-span-2 mb-4">
               <FormField
@@ -75,9 +77,9 @@ export default function FormAddKaryawan() {
                 name="nama"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel htmlFor="nama">Nama Karyawan</FormLabel>
+                    <FormLabel htmlFor="nama">Nama</FormLabel>
                     <FormControl>
-                      <Input id="nama" placeholder="Masukkan nama karyawan" {...field} />
+                      <Input id="nama" placeholder="Masukkan nama pengguna" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -86,12 +88,39 @@ export default function FormAddKaryawan() {
 
               <FormField
                 control={control}
-                name="handphone"
+                name="username"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel htmlFor="handphone">Handphone</FormLabel>
+                    <FormLabel htmlFor="username">Username</FormLabel>
                     <FormControl>
-                      <Input id="handphone" placeholder="Masukkan no handphone karyawan" {...field} />
+                      <Input id="username" placeholder="Masukkan username pengguna" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel htmlFor="password">Password</FormLabel>
+                    <FormControl>
+                      <Input id="password" type="password" placeholder="Masukkan password pengguna" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={control}
+                name="repeatPassword"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel htmlFor="repeatPassword">Ulangi Password</FormLabel>
+                    <FormControl>
+                      <Input id="repeatPassword" type="password" placeholder="Ketikkan ulang password" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -102,7 +131,7 @@ export default function FormAddKaryawan() {
             {apiError && <p className="text-destructive text-sm text-end mb-4">{apiError}</p>}
             <div className="flex justify-end">
               <Button type="submit" disabled={isSubmitting}>
-                <span>Tambah</span>
+                <span>Registrasi</span>
                 {isSubmitting && <Loader2 className="ml-2 animate-spin" />}
               </Button>
             </div>

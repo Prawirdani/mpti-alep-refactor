@@ -54,6 +54,16 @@ declare global {
     karyawan: Karyawan;
     paket: Paket;
   };
+
+  type User = {
+    id: number;
+    nama: string;
+    username: string;
+    role: UserRole;
+    created_at: string;
+    updated_at: string;
+    deleted: boolean;
+  };
 }
 
 export {};

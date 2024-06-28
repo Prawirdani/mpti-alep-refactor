@@ -9,21 +9,25 @@ import { useForm } from 'react-hook-form';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { useUser } from '@/context/hooks';
-import { UserUpdateSchema, userUpdateSchema } from '@/lib/schemas/user';
+import { UserResetPasswordSchema, userResetPasswordSchema } from '@/lib/schemas/user';
 
 interface Props {
   open: boolean;
   setOpen: (open: boolean) => void;
-  updateTarget: User;
+  id: number;
 }
 
-export default function FormUpdateUser({ open, setOpen, updateTarget }: Props) {
+export default function FormResetPasswordUser({ open, setOpen, id }: Props) {
   const [apiError, setApiError] = useState<string | null>(null);
 
-  const { updateUser, invalidate } = useUser();
+  const { resetPassword, invalidate } = useUser();
 
-  const form = useForm<UserUpdateSchema>({
-    resolver: zodResolver(userUpdateSchema),
+  const form = useForm<UserResetPasswordSchema>({
+    resolver: zodResolver(userResetPasswordSchema),
+    defaultValues: {
+      newPassword: '',
+      repeatPassword: '',
+    },
   });
 
   const {
@@ -33,30 +37,27 @@ export default function FormUpdateUser({ open, setOpen, updateTarget }: Props) {
     formState: { isSubmitting },
   } = form;
 
-  async function onSubmit(data: UserUpdateSchema) {
+  async function onSubmit(data: UserResetPasswordSchema) {
     try {
-      const res = await updateUser(updateTarget.id, data);
+      const res = await resetPassword(id, data);
 
       const resBody = await res.json();
       if (!res.ok) {
         setApiError(isErrorResponse(resBody) ? resBody.error.message : 'Terjadi Kesalahan');
         return;
       }
-      toast({ description: 'Berhasil update akun pengguna!' });
+      toast({ description: 'Berhasil reset password akun!' });
       await invalidate();
       setOpen(false);
     } catch (error) {
-      toast({ description: 'Gagal update akun pengguna!', variant: 'destructive' });
+      toast({ description: 'Gagal reset password!', variant: 'destructive' });
     }
   }
 
   useEffect(() => {
-    reset({
-      nama: updateTarget.nama,
-      username: updateTarget.username,
-    });
+    reset();
     setApiError(null);
-  }, [open, updateTarget]);
+  }, [open]);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -64,17 +65,22 @@ export default function FormUpdateUser({ open, setOpen, updateTarget }: Props) {
         <Form {...form}>
           <form onSubmit={handleSubmit(onSubmit)}>
             <DialogHeader className="mb-4">
-              <DialogTitle>Update Akun Pengguna</DialogTitle>
+              <DialogTitle>Reset Password Akun</DialogTitle>
             </DialogHeader>
             <div className="space-y-2 col-span-2 mb-4">
               <FormField
                 control={control}
-                name="nama"
+                name="newPassword"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel htmlFor="nama">Nama</FormLabel>
+                    <FormLabel htmlFor="newPassword">Password</FormLabel>
                     <FormControl>
-                      <Input id="nama" placeholder="Masukkan nama pengguna" {...field} />
+                      <Input
+                        id="newPassword"
+                        type="password"
+                        placeholder="Masukkan password baru pengguna"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -83,12 +89,12 @@ export default function FormUpdateUser({ open, setOpen, updateTarget }: Props) {
 
               <FormField
                 control={control}
-                name="username"
+                name="repeatPassword"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel htmlFor="username">Username</FormLabel>
+                    <FormLabel htmlFor="repeatPassword">Ulangi Password</FormLabel>
                     <FormControl>
-                      <Input id="username" placeholder="Masukkan username pengguna" {...field} />
+                      <Input id="repeatPassword" type="password" placeholder="Ketikkan ulang password" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

@@ -3,6 +3,7 @@ import { AuthCtx } from './AuthProvider';
 import { TransaksiCtx } from './TransaksiProvider';
 import { PaketCtx } from './PaketProvider';
 import { KaryawanCtx } from './KaryawanProvider';
+import { UserCtx } from './UserProvider';
 
 export const useAuth = () => {
   const ctx = useContext(AuthCtx);
@@ -32,6 +33,14 @@ export const useKaryawan = () => {
   const ctx = useContext(KaryawanCtx);
   if (ctx === undefined) {
     throw new Error('useKaryawan must be used within a KaryawanProvider');
+  }
+  return ctx;
+};
+
+export const useUser = () => {
+  const ctx = useContext(UserCtx);
+  if (ctx === undefined) {
+    throw new Error('useUser must be used within a UserProvider');
   }
   return ctx;
 };

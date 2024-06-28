@@ -11,6 +11,7 @@ import Loader from '@/components/ui/loader';
 import TransaksiProvider from '@/context/TransaksiProvider';
 import PaketProvider from '@/context/PaketProvider';
 import KaryawanProvider from '@/context/KaryawanProvider';
+import UserProvider from './context/UserProvider';
 
 export default function App() {
   const router = createBrowserRouter([
@@ -26,9 +27,11 @@ export default function App() {
       <TransaksiProvider>
         <PaketProvider>
           <KaryawanProvider>
-            <Fetcher>
-              <RouterProvider router={router} />
-            </Fetcher>
+            <UserProvider>
+              <Fetcher>
+                <RouterProvider router={router} />
+              </Fetcher>
+            </UserProvider>
           </KaryawanProvider>
         </PaketProvider>
       </TransaksiProvider>
