@@ -8,12 +8,12 @@ import { Card } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { useTransaksi } from '@/context/hooks';
 import { formatIDR } from '@/lib/formatter';
-import { titleCase } from '@/lib/utils';
 import { Check, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { id } from 'date-fns/locale';
 import { format } from 'date-fns';
 import Loader from '@/components/ui/loader';
+import StatusBadge from '@/components/transaksi/status-badge';
 
 export default function TransaksiPage() {
   const [loading, setLoading] = useState(true);
@@ -75,25 +75,21 @@ export default function TransaksiPage() {
                   <TableCell>{tx.no_hp}</TableCell>
                   <TableCell>{tx.karyawan.nama}</TableCell>
                   <TableCell>{formatIDR(tx.total_harga)}</TableCell>
-                  <TableCell>{titleCase(tx.status)}</TableCell>
-                  <TableCell className="flex justify-around">
-                    <Button
-                      disabled={tx.status === 'selesai' || tx.status === 'batal'}
-                      onClick={() => triggerCancelDialog(tx)}
-                      variant="destructive"
-                      size="icon"
-                    >
-                      <X />
-                    </Button>
-                    <Button
-                      disabled={tx.status === 'selesai' || tx.status === 'batal'}
-                      onClick={() => triggerCompleteDialog(tx)}
-                      variant="default"
-                      size="icon"
-                    >
-                      <Check />
-                    </Button>
+                  <TableCell>
+                    <StatusBadge status={tx.status} />
                   </TableCell>
+                  {tx.status != 'selesai' && tx.status != 'batal' ? (
+                    <TableCell className="flex gap-4">
+                      <Button onClick={() => triggerCancelDialog(tx)} variant="destructive" size="icon">
+                        <X />
+                      </Button>
+                      <Button onClick={() => triggerCompleteDialog(tx)} variant="default" size="icon">
+                        <Check />
+                      </Button>
+                    </TableCell>
+                  ) : (
+                    <TableCell />
+                  )}
                 </TableRow>
               ))}
             </TableBody>
