@@ -16,7 +16,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { cn } from '@/lib/utils';
 import { id } from 'date-fns/locale';
 import { format } from 'date-fns';
-import DialogSuccessBooking from '@/components/booking/dialog-success';
+import DialogSuccessBooking from './booking-dialog-success';
 
 export default function BookingForm() {
   const [apiError, setApiError] = useState<string | null>(null);
