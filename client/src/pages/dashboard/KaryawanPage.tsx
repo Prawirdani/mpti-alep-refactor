@@ -29,7 +29,7 @@ export default function KaryawanPage() {
 
   return (
     <section>
-      <TitleSetter title="Transaksi" />
+      <TitleSetter title="Dashboard | Karyawan" />
       <div className="mb-4">
         <H2>Karyawan</H2>
         <p>Daftar Karyawan</p>

@@ -40,7 +40,7 @@ export default function TransaksiPage() {
     <Loader />
   ) : (
     <section>
-      <TitleSetter title="Transaksi" />
+      <TitleSetter title="Dashboard | Transaksi" />
       <div className="mb-4">
         <H2>Transaksi</H2>
         <p>Daftar Transaksi</p>
