@@ -1,7 +1,7 @@
 import './App.css';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { Toaster } from './components/ui/toaster';
-import { publicRoutes, adminRoutes } from './pages';
+import { publicRoutes, protectedRoutes } from './pages';
 import { H1 } from '@/components/typography';
 import { Frown } from 'lucide-react';
 import AuthProvider from './context/AuthProvider';
@@ -15,7 +15,7 @@ import KaryawanProvider from '@/context/KaryawanProvider';
 export default function App() {
   const router = createBrowserRouter([
     ...publicRoutes,
-    ...adminRoutes,
+    ...protectedRoutes,
     {
       path: '*',
       element: <NotFound />,

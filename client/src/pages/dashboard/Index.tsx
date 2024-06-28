@@ -1,6 +1,6 @@
 import { Card } from '@/components/ui/card';
 
-export default function AdminIndex() {
+export default function Index() {
   return (
     <section>
       <div className="grid sm:grid-cols-2 xl:grid-cols-4 gap-8">

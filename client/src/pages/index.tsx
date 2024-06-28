@@ -1,36 +1,17 @@
-import { Outlet, RouteObject } from 'react-router-dom';
+import { Navigate, Outlet, RouteObject } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useAuth } from '@/context/hooks';
 import Loader from '@/components/ui/loader';
-import AdminIndex from './dashboard/AdminIndex';
 import LoginPage from './dashboard/LoginPage';
 import SettingPage from './dashboard/SettingPage';
 import TransaksiPage from './dashboard/TransaksiPage';
 import PublicPage from './public/Page';
 import DashboardLayout from '@/components/layout/dashboard/Layout';
+import Index from './dashboard/Index';
+import KaryawanPage from './dashboard/KaryawanPage';
+import AkunPage from './dashboard/AkunPage';
 
-function PersistLogin() {
-  const [isLoading, setIsLoading] = useState(true);
-  const { identify } = useAuth();
-
-  useEffect(() => {
-    const identifyUser = async () => {
-      await identify().finally(() => setIsLoading(false));
-    };
-
-    identifyUser();
-  }, []);
-
-  return isLoading ? (
-    <div className="h-screen">
-      <Loader />
-    </div>
-  ) : (
-    <Outlet />
-  );
-}
-
-export const adminRoutes: RouteObject[] = [
+export const protectedRoutes: RouteObject[] = [
   {
     path: '/auth/login',
     element: <LoginPage />,
@@ -39,20 +20,33 @@ export const adminRoutes: RouteObject[] = [
     element: <PersistLogin />,
     children: [
       {
-        path: '/admin',
+        path: '/dashboard',
         element: <DashboardLayout />,
         children: [
           {
-            path: '/admin',
-            element: <AdminIndex />,
+            path: '/dashboard',
+            element: <Index />,
           },
           {
-            path: '/admin/transactions',
+            path: '/dashboard/transaksi',
             element: <TransaksiPage />,
           },
           {
-            path: '/admin/settings',
+            path: '/dashboard/settings',
             element: <SettingPage />,
+          },
+          {
+            element: <AdminOnly />,
+            children: [
+              {
+                path: '/dashboard/karyawan',
+                element: <KaryawanPage />,
+              },
+              {
+                path: '/dashboard/akun',
+                element: <AkunPage />,
+              },
+            ],
           },
         ],
       },
@@ -66,3 +60,31 @@ export const publicRoutes: RouteObject[] = [
     element: <PublicPage />,
   },
 ];
+
+function PersistLogin() {
+  const [isLoading, setIsLoading] = useState(true);
+  const { identify, isAuthenticated } = useAuth();
+
+  useEffect(() => {
+    const identifyUser = async () => {
+      await identify().finally(() => setIsLoading(false));
+    };
+
+    identifyUser();
+  }, []);
+
+  return isLoading ? (
+    <div className="h-screen">
+      <Loader />
+    </div>
+  ) : isAuthenticated ? (
+    <Outlet />
+  ) : (
+    <Navigate to="/auth/login" replace />
+  );
+}
+
+function AdminOnly() {
+  const { user } = useAuth();
+  return user.role == 'admin' ? <Outlet /> : <Navigate to="/dashboard" replace />;
+}

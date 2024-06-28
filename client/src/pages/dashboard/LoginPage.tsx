@@ -34,7 +34,7 @@ export default function LoginPage() {
       setApiError(isErrorResponse(resBody) ? resBody.error.message : 'Terjadi kesalahan');
       return;
     }
-    navigate('/admin', { replace: true });
+    navigate('/dashboard', { replace: true });
   };
   return (
     <>

@@ -1,14 +1,11 @@
 import { useState } from 'react';
-import Header from './header';
-import Sidebar from './sidebar';
-import { Navigate, Outlet } from 'react-router-dom';
-import { useAuth } from '@/context/hooks';
+import Header from './Header';
+import Sidebar from './Sidebar';
+import { Outlet } from 'react-router-dom';
 
 export default function DashboardLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const { isAuthenticated } = useAuth();
-
-  return isAuthenticated ? (
+  return (
     <div className="flex min-h-screen overflow-hidden">
       {/* Sidebar component */}
       <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
@@ -25,7 +22,5 @@ export default function DashboardLayout() {
         {/* Main content */}
       </div>
     </div>
-  ) : (
-    <Navigate to="/auth/login" replace />
   );
 }
