@@ -1,5 +1,5 @@
 import { Fetch } from '@/lib/fetcher';
-import { createContext, useEffect, useState } from 'react';
+import { createContext, useState } from 'react';
 
 type PaketCtxType = {
   listPaket: Paket[];
@@ -10,10 +10,6 @@ export const PaketCtx = createContext<PaketCtxType | undefined>(undefined);
 
 export default function TransaksiProvider({ children }: { children: React.ReactNode }) {
   const [listPaket, setListPaket] = useState<Paket[]>([]);
-
-  useEffect(() => {
-    console.log('PaketProvider.tsx: useEffect()');
-  }, []);
 
   async function fetchPaket() {
     const res = await Fetch('/api/paket', {

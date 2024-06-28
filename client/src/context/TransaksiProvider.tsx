@@ -1,6 +1,6 @@
 import { Fetch } from '@/lib/fetcher';
 import { TransaksiBookingSchema, TransaksiCreateSchema } from '@/lib/schemas/transaksi';
-import { createContext, useEffect, useState } from 'react';
+import { createContext, useState } from 'react';
 
 type TransaksiCtxType = {
   listTransaksi: Transaksi[];
@@ -16,10 +16,6 @@ export const TransaksiCtx = createContext<TransaksiCtxType | undefined>(undefine
 
 export default function TransaksiProvider({ children }: { children: React.ReactNode }) {
   const [listTransaksi, setListTransaksi] = useState<Transaksi[]>([]);
-
-  useEffect(() => {
-    console.log('TransaksiProvider.tsx: useEffect()');
-  }, []);
 
   async function fetchTransaksi() {
     const res = await Fetch('/api/transaksi', {

@@ -1,6 +1,6 @@
 import { Fetch } from '@/lib/fetcher';
 import { KaryawanSchema } from '@/lib/schemas/karyawan';
-import { createContext, useEffect, useState } from 'react';
+import { createContext, useState } from 'react';
 
 type KaryawanCtxType = {
   listKaryawan: Karyawan[];
@@ -15,10 +15,6 @@ export const KaryawanCtx = createContext<KaryawanCtxType | undefined>(undefined)
 
 export default function KaryawanProvider({ children }: { children: React.ReactNode }) {
   const [listKaryawan, setListTransaksi] = useState<Karyawan[]>([]);
-
-  useEffect(() => {
-    console.log('TransaksiProvider.tsx: useEffect()');
-  }, []);
 
   async function fetchKaryawan() {
     const res = await Fetch('/api/karyawan', {
