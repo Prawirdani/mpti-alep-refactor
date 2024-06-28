@@ -7,11 +7,7 @@ import AdminIndex from './dashboard/AdminIndex';
 import LoginPage from './dashboard/LoginPage';
 import SettingPage from './dashboard/SettingPage';
 import TransaksiPage from './dashboard/TransaksiPage';
-import PublicContent from '@/components/layout/Content';
-import HomePage from './public/Home';
-import AboutPage from './public/About';
-import ContactPage from './public/Contact';
-import BookingPage from './public/Booking';
+import PublicPage from './public/Page';
 
 function PersistLogin() {
   const [isLoading, setIsLoading] = useState(true);
@@ -66,24 +62,7 @@ export const adminRoutes: RouteObject[] = [
 
 export const publicRoutes: RouteObject[] = [
   {
-    element: <PublicContent />,
-    children: [
-      {
-        path: '/',
-        element: <HomePage />,
-      },
-      {
-        path: '/about',
-        element: <AboutPage />,
-      },
-      {
-        path: '/contact',
-        element: <ContactPage />,
-      },
-      {
-        path: '/booking',
-        element: <BookingPage />,
-      },
-    ],
+    path: '/',
+    element: <PublicPage />,
   },
 ];

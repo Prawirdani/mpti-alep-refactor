@@ -12,9 +12,6 @@ module.exports = {
       },
     },
     extend: {
-      backgroundImage: {
-        'public-bg': "url('/images/barbershop.jpg')",
-      },
       screens: {
         xs: '480px',
       },
@@ -26,6 +23,8 @@ module.exports = {
         geist: ['Geist', 'sans-serif'],
       },
       colors: {
+        'public-bg': '#010101',
+        'public-primary': '#CFB53B',
         black: '#322C2B', // This
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',

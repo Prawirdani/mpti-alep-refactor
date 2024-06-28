@@ -1,5 +1,5 @@
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import './App.css';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { Toaster } from './components/ui/toaster';
 import { publicRoutes, adminRoutes } from './pages';
 import { H1 } from '@/components/typography';
