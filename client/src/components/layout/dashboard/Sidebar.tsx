@@ -34,7 +34,7 @@ const adminSidebar = [
     path: '/dashboard/karyawan',
   },
   {
-    name: 'Akun',
+    name: 'Manajemen Akun',
     icon: <KeyRoundIcon />,
     path: '/dashboard/akun',
   },
