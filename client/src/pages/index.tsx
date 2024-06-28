@@ -1,13 +1,13 @@
 import { Outlet, RouteObject } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useAuth } from '@/context/hooks';
-import Dashboard from '@/components/layout/dashboard/Dashboard';
 import Loader from '@/components/ui/loader';
 import AdminIndex from './dashboard/AdminIndex';
 import LoginPage from './dashboard/LoginPage';
 import SettingPage from './dashboard/SettingPage';
 import TransaksiPage from './dashboard/TransaksiPage';
 import PublicPage from './public/Page';
+import DashboardLayout from '@/components/layout/dashboard/Layout';
 
 function PersistLogin() {
   const [isLoading, setIsLoading] = useState(true);
@@ -40,7 +40,7 @@ export const adminRoutes: RouteObject[] = [
     children: [
       {
         path: '/admin',
-        element: <Dashboard />,
+        element: <DashboardLayout />,
         children: [
           {
             path: '/admin',

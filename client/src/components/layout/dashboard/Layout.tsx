@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import Header from './Header';
-import Sidebar from './Sidebar';
+import Header from './header';
+import Sidebar from './sidebar';
 import { Navigate, Outlet } from 'react-router-dom';
 import { useAuth } from '@/context/hooks';
 
-export default function Dashboard() {
+export default function DashboardLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const { isAuthenticated } = useAuth();
 
