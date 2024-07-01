@@ -14,12 +14,12 @@ import PaketPage from './dashboard/PaketPage';
 
 export const protectedRoutes: RouteObject[] = [
   {
-    path: '/auth/login',
-    element: <LoginPage />,
-  },
-  {
     element: <PersistLogin />,
     children: [
+      {
+        path: '/auth/login',
+        element: <LoginPage />,
+      },
       {
         path: '/dashboard',
         element: <DashboardLayout />,

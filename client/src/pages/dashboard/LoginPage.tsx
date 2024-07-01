@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Loader2 } from 'lucide-react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { H2 } from '@/components/typography';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -25,7 +25,7 @@ export default function LoginPage() {
     },
   });
 
-  const { login } = useAuth();
+  const { login, isAuthenticated } = useAuth();
 
   const onSubmit = async (data: LoginFormSchema) => {
     const res = await login(data);
@@ -36,7 +36,9 @@ export default function LoginPage() {
     }
     navigate('/dashboard', { replace: true });
   };
-  return (
+  return isAuthenticated ? (
+    <Navigate to="/dashboard" replace />
+  ) : (
     <>
       <TitleSetter title="Login" />
       <div className="h-screen flex place-items-center overflow-hidden">
