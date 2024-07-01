@@ -20,11 +20,6 @@ const globalSidebar = [
     icon: <FileText />,
     path: '/dashboard/transaksi',
   },
-  {
-    name: 'Setting',
-    icon: <Settings />,
-    path: '/dashboard/settings',
-  },
 ];
 
 const adminSidebar = [
@@ -45,11 +40,17 @@ const adminSidebar = [
   },
 ];
 
+const settingsSidebar = {
+  name: 'Setting',
+  icon: <Settings />,
+  path: '/dashboard/settings',
+};
+
 export default function Sidebar({ sidebarOpen, setSidebarOpen }: SidebarProps) {
   const sideBarRef = useRef(null);
   const { user } = useAuth();
 
-  const sidebarItems = user?.role === 'admin' ? [...globalSidebar, ...adminSidebar] : globalSidebar;
+  const sidebarItems = user?.role === 'admin' ? [...globalSidebar, ...adminSidebar, settingsSidebar] : globalSidebar;
 
   return (
     <aside
