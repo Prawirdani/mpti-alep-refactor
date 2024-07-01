@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/context/hooks';
-import { FileText, LayoutDashboard, Settings, UserCog2, Users2, X } from 'lucide-react';
+import { FileText, LayoutDashboard, Package, Settings, UserCog2, Users2, X } from 'lucide-react';
 import { useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
@@ -37,6 +37,11 @@ const adminSidebar = [
     name: 'Manajemen Akun',
     icon: <UserCog2 />,
     path: '/dashboard/akun',
+  },
+  {
+    name: 'Paket',
+    icon: <Package />,
+    path: '/dashboard/paket',
   },
 ];
 

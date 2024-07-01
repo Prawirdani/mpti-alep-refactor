@@ -10,6 +10,7 @@ import DashboardLayout from '@/components/layout/dashboard/Layout';
 import Index from './dashboard/Index';
 import KaryawanPage from './dashboard/KaryawanPage';
 import AkunPage from './dashboard/AkunPage';
+import PaketPage from './dashboard/PaketPage';
 
 export const protectedRoutes: RouteObject[] = [
   {
@@ -45,6 +46,10 @@ export const protectedRoutes: RouteObject[] = [
               {
                 path: '/dashboard/akun',
                 element: <AkunPage />,
+              },
+              {
+                path: '/dashboard/paket',
+                element: <PaketPage />,
               },
             ],
           },
