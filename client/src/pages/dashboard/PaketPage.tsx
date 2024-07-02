@@ -47,7 +47,7 @@ export default function PaketPage() {
                 <TableHead className="text-nowrap">Nama</TableHead>
                 <TableHead className="text-nowrap">Deksripsi</TableHead>
                 <TableHead className="text-nowrap">Harga</TableHead>
-                <TableHead className="w-[10%]"></TableHead>
+                <TableHead className="w-[15%]"></TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -56,7 +56,7 @@ export default function PaketPage() {
                   <TableCell>{p.nama}</TableCell>
                   <TableCell>{p.deskripsi}</TableCell>
                   <TableCell>{formatIDR(p.harga)}</TableCell>
-                  <TableCell className="space-x-4">
+                  <TableCell className="flex gap-4">
                     <Button onClick={() => triggerUpdateDialog(p)} variant="default" size="icon">
                       <SquarePen className="h-5 w-5" />
                     </Button>

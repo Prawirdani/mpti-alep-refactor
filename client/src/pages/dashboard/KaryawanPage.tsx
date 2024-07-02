@@ -47,7 +47,7 @@ export default function KaryawanPage() {
                 <TableHead className="text-nowrap">Id</TableHead>
                 <TableHead className="text-nowrap">Nama</TableHead>
                 <TableHead className="text-nowrap">Handphone</TableHead>
-                <TableHead className="w-[10%]"></TableHead>
+                <TableHead className="w-[15%]"></TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -56,7 +56,7 @@ export default function KaryawanPage() {
                   <TableCell>{k.id}</TableCell>
                   <TableCell>{k.nama}</TableCell>
                   <TableCell>{k.handphone}</TableCell>
-                  <TableCell className="space-x-4">
+                  <TableCell className="flex gap-4">
                     <Button onClick={() => triggerUpdateDialog(k)} variant="default" size="icon">
                       <SquarePen className="h-5 w-5" />
                     </Button>
