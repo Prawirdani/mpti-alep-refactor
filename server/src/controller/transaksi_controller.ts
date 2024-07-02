@@ -12,7 +12,7 @@ import { ErrNotFound } from '../utils/error';
 import { transaksi } from '../db/schemas/transaksi';
 import { karyawan } from '../db/schemas/karyawan';
 import { paket } from '../db/schemas/paket';
-import { eq, getTableColumns } from 'drizzle-orm';
+import { asc, eq, getTableColumns } from 'drizzle-orm';
 import db from '../db';
 
 const transaksiRoute = Router();
@@ -33,6 +33,7 @@ async function getTransaksi(req: Request, res: Response, next: NextFunction) {
         paket: { ...getTableColumns(paket) },
       })
       .from(transaksi)
+      .orderBy(asc(transaksi.status))
       .innerJoin(karyawan, eq(karyawan.id, transaksi.karyawan_id))
       .innerJoin(paket, eq(paket.id, transaksi.paket_id));
 
