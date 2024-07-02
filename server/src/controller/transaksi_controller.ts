@@ -23,7 +23,7 @@ transaksiRoute.post('/transaksi/booking', createTransaksiBooking);
 transaksiRoute.post('/transaksi/:id/booking/process', AuthAccessToken, processTransaksiBooking);
 transaksiRoute.post('/transaksi/:id/complete', AuthAccessToken, completeTransaksi);
 transaksiRoute.post('/transaksi/:id/cancel', AuthAccessToken, cancelTransaksi);
-transaksiRoute.get('/transaksi/report', report);
+transaksiRoute.get('/transaksi/report', AuthAccessToken, report);
 export default transaksiRoute;
 
 async function getTransaksi(req: Request, res: Response, next: NextFunction) {
