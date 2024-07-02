@@ -36,7 +36,7 @@ export default function SettingPage() {
 
       <Card className="h-[400px] bg-white shadow-md flex">
         <ul className="w-[15%] flex flex-col p-4">
-          <li className="font-medium text-lg hover:cursor-pointer bg-gray-300 px-4 py-2 rounded-md">Akun</li>
+          <li className="font-medium text-lg hover:cursor-pointer bg-gray-200 px-4 py-2 rounded-md">Akun</li>
         </ul>
         <Separator orientation="vertical" />
         <div className="w-full p-6 [&_*]:border-gray-400">
