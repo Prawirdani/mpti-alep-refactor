@@ -12,7 +12,7 @@ import { ErrNotFound } from '../utils/error';
 import { transaksi } from '../db/schemas/transaksi';
 import { karyawan } from '../db/schemas/karyawan';
 import { paket } from '../db/schemas/paket';
-import { asc, eq, getTableColumns } from 'drizzle-orm';
+import { and, asc, eq, getTableColumns, gte, lte } from 'drizzle-orm';
 import db from '../db';
 import ExcelJS from 'exceljs';
 
@@ -107,8 +107,6 @@ async function createTransaksiBooking(req: Request, res: Response, next: NextFun
     if (!karyawanData) {
       throw ErrNotFound('Karyawan tidak ditemukan!');
     }
-
-    console.log('request.jadwal_booking', request.jadwal_booking);
 
     const insert = await db.insert(transaksi).values({
       karyawan_id: request.karyawan_id,
@@ -218,8 +216,14 @@ async function report(req: Request, res: Response, next: NextFunction) {
     const wb = new ExcelJS.Workbook();
     const ws = wb.addWorksheet('Transaksi');
 
-    const from = req.query.from;
-    const to = req.query.to;
+    const qFrom = req.query.from;
+    const qTo = req.query.to;
+
+    const from = new Date(qFrom as string);
+    from.setHours(0, 0, 0, 0);
+
+    const to = new Date(qTo as string);
+    to.setHours(23, 59, 59, 999);
 
     const cols = ws.addRow(COLUMNS);
     cols.font = { bold: true };
@@ -234,7 +238,13 @@ async function report(req: Request, res: Response, next: NextFunction) {
       .orderBy(asc(transaksi.status))
       .innerJoin(karyawan, eq(karyawan.id, transaksi.karyawan_id))
       .innerJoin(paket, eq(paket.id, transaksi.paket_id))
-      .where(eq(transaksi.status, 'selesai'));
+      .where(
+        and(
+          eq(transaksi.status, 'selesai'),
+          gte(transaksi.waktu_transaksi, from),
+          lte(transaksi.waktu_transaksi, to),
+        ),
+      );
 
     let grandTotal = 0;
     transaksiList.forEach((transaksi) => {
