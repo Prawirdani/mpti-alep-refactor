@@ -49,9 +49,9 @@ export default function SettingPage() {
 				<Separator orientation="vertical" className="bg-gray-300" />
 				<div className="w-full p-6 [&_*]:border-gray-400">
 					<p className="text-lg font-medium mb-6">Pengaturan Akun</p>
-					<Card className="w-full bg-white px-4 shadow-md mb-8">
+					<Card className="w-full bg-white px-4 mb-8">
 						<div className="flex justify-between items-center py-4">
-							<p>Informasi Personal</p>
+							<p>Informasi Akun</p>
 							<FormUpdateUser
 								updateTarget={updateTarget}
 								open={openUpdateDialog}
@@ -79,7 +79,7 @@ export default function SettingPage() {
 							</div>
 						</div>
 					</Card>
-					<Card className="w-full bg-white px-4 shadow-md">
+					<Card className="w-full bg-white px-4">
 						<div className="flex justify-between items-center py-4">
 							<p>Password</p>
 							<FormResetPasswordUser
