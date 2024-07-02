@@ -11,7 +11,7 @@ import { SquarePen } from 'lucide-react';
 import { useState } from 'react';
 
 export default function SettingPage() {
-	const { user } = useAuth();
+	const { user, identify } = useAuth();
 
 	const [updateTarget, setUpdateTarget] = useState<User>({} as User);
 	const [openUpdateDialog, setOpenUpdateDialog] = useState(false);
@@ -26,6 +26,14 @@ export default function SettingPage() {
 		setUpdateTarget(k);
 		setOpenResetPasswordDialog(true);
 	};
+
+	// Revalidate credentials after updating user
+	async function revalidateCredentials() {
+		const refreshResponse = await fetch('/api/auth/refresh', { credentials: 'include' });
+		if (refreshResponse.ok) {
+			await identify();
+		}
+	}
 
 	return (
 		<section>
@@ -44,7 +52,12 @@ export default function SettingPage() {
 					<Card className="w-full bg-white px-4 shadow-md mb-8">
 						<div className="flex justify-between items-center py-4">
 							<p>Informasi Personal</p>
-							<FormUpdateUser updateTarget={updateTarget} open={openUpdateDialog} setOpen={setOpenUpdateDialog} />
+							<FormUpdateUser
+								updateTarget={updateTarget}
+								open={openUpdateDialog}
+								setOpen={setOpenUpdateDialog}
+								callback={() => revalidateCredentials()}
+							/>
 							<Button variant="outline" size="sm" onClick={() => triggerUpdateDialog(user as User)}>
 								<SquarePen className="w-4 h-4 mr-2" />
 								<span>Edit</span>
