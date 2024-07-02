@@ -14,6 +14,7 @@ import { karyawan } from '../db/schemas/karyawan';
 import { paket } from '../db/schemas/paket';
 import { asc, eq, getTableColumns } from 'drizzle-orm';
 import db from '../db';
+import ExcelJS from 'exceljs';
 
 const transaksiRoute = Router();
 transaksiRoute.get('/transaksi', AuthAccessToken, getTransaksi);
@@ -22,6 +23,7 @@ transaksiRoute.post('/transaksi/booking', createTransaksiBooking);
 transaksiRoute.post('/transaksi/:id/booking/process', AuthAccessToken, processTransaksiBooking);
 transaksiRoute.post('/transaksi/:id/complete', AuthAccessToken, completeTransaksi);
 transaksiRoute.post('/transaksi/:id/cancel', AuthAccessToken, cancelTransaksi);
+transaksiRoute.get('/transaksi/report', report);
 export default transaksiRoute;
 
 async function getTransaksi(req: Request, res: Response, next: NextFunction) {
@@ -205,6 +207,64 @@ async function processTransaksiBooking(req: Request, res: Response, next: NextFu
       .where(eq(transaksi.id, Number(id)));
 
     res.status(200).json(MakeResponse(null, 'Berhasil memproses transaksi booking!'));
+  } catch (error) {
+    next(error);
+  }
+}
+
+const COLUMNS = ['ID', 'Tanggal', 'Nama Customer', 'No HP', 'Paket', 'Barber', 'Total'];
+async function report(req: Request, res: Response, next: NextFunction) {
+  try {
+    const wb = new ExcelJS.Workbook();
+    const ws = wb.addWorksheet('Transaksi');
+
+    const from = req.query.from;
+    const to = req.query.to;
+
+    const cols = ws.addRow(COLUMNS);
+    cols.font = { bold: true };
+
+    const transaksiList = await db
+      .select({
+        ...getTableColumns(transaksi),
+        karyawan: { ...getTableColumns(karyawan) },
+        paket: { ...getTableColumns(paket) },
+      })
+      .from(transaksi)
+      .orderBy(asc(transaksi.status))
+      .innerJoin(karyawan, eq(karyawan.id, transaksi.karyawan_id))
+      .innerJoin(paket, eq(paket.id, transaksi.paket_id))
+      .where(eq(transaksi.status, 'selesai'));
+
+    let grandTotal = 0;
+    transaksiList.forEach((transaksi) => {
+      grandTotal += transaksi.total_harga;
+      ws.addRow([
+        transaksi.id,
+        transaksi.waktu_transaksi,
+        transaksi.nama_customer,
+        transaksi.no_hp,
+        transaksi.paket.nama,
+        transaksi.karyawan.nama,
+        transaksi.total_harga,
+      ]);
+    });
+    ws.addRow(['', '', '', '', '', 'Total', grandTotal]);
+
+    // Set the response headers to indicate a file download
+    const date = new Date();
+    const fileName = `report_${date.getDay()}_${date.getMonth()}_${date.getFullYear()}.xlsx`;
+    res.setHeader(
+      'Content-Type',
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    );
+    res.setHeader('Content-Disposition', `attachment; filename=${fileName}`);
+
+    // Write the Excel file to the response
+    await wb.xlsx.write(res);
+
+    // End the response
+    res.end();
   } catch (error) {
     next(error);
   }

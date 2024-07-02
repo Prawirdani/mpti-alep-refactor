@@ -8,7 +8,7 @@ import { Card } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { useTransaksi } from '@/context/hooks';
 import { formatIDR } from '@/lib/formatter';
-import { Check, X } from 'lucide-react';
+import { Check, Sheet, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { id } from 'date-fns/locale';
 import { format } from 'date-fns';
@@ -36,6 +36,46 @@ export default function TransaksiPage() {
     setOpenCancelDialog(true);
   };
 
+  const [excelLoading, setExcelLoading] = useState(false);
+  const downloadExcel = async () => {
+    try {
+      setExcelLoading(true);
+      const response = await fetch('/api/transaksi/report', {
+        method: 'GET',
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const blob = await response.blob();
+
+      // Create a link element
+      const link = document.createElement('a');
+
+      // Set the download attribute with a filename
+      link.href = window.URL.createObjectURL(blob);
+
+      const date = new Date();
+      const fileName = `report_${date.getDay()}_${date.getMonth()}_${date.getFullYear()}.xlsx`;
+
+      link.download = fileName;
+
+      // Append the link to the body
+      document.body.appendChild(link);
+
+      // Programmatically click the link to trigger the download
+      link.click();
+
+      // Remove the link from the document
+      document.body.removeChild(link);
+    } catch (error) {
+      console.error('Error downloading the Excel file:', error);
+    } finally {
+      setExcelLoading(false);
+    }
+  };
+
   return loading ? (
     <Loader />
   ) : (
@@ -45,8 +85,13 @@ export default function TransaksiPage() {
         <H2>Transaksi</H2>
         <p>Daftar Transaksi</p>
       </div>
-      <div className="flex justify-end mb-4">
+      <div className="flex justify-end mb-4 gap-3">
+        <Button onClick={downloadExcel} variant="default" disabled={excelLoading}>
+          <Sheet className="mr-2 h-4 w-4" />
+          <span>Laporan</span>
+        </Button>
         <FormAddTransaksi />
+
         <DialogCompleteTransaksi open={openCompleteDialog} setOpen={setOpenCompleteDialog} id={updateTarget.id} />
         <DialogCancelTransaksi open={openCancelDialog} setOpen={setOpenCancelDialog} id={updateTarget.id} />
       </div>
@@ -99,7 +144,3 @@ export default function TransaksiPage() {
     </section>
   );
 }
-
-// <Button className="" variant="outline" size="icon">
-//   <TextSearch />
-// </Button>
