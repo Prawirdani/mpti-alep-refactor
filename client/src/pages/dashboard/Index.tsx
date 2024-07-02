@@ -38,9 +38,6 @@ export default function Index() {
 				<OverviewCard title="Pendapatan Hari Ini" loading={loading} icon={<Wallet2 />}>
 					<span className="text-2xl text-end">{formatIDR(stats?.todayRevenue ?? 0)}</span>
 				</OverviewCard>
-				<Card className="p-4 rounded-sm h-[400px] md:col-span-2 xl:col-span-3 flex place-items-center justify-center">
-					Graph goes here
-				</Card>
 			</div>
 		</section>
 	);
